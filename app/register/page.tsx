@@ -1,20 +1,24 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion"; // Added Variants
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { createClient } from '@supabase/supabase-js';
 import { Upload, AlertCircle, CheckCircle, Loader2, ArrowLeft, CreditCard, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-// --- SUPABASE CLIENT SETUP ---
+// --- SUPABASE CLIENT SETUP (FIXED FOR BUILD) ---
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Only initialize if keys exist to prevent build-time crashes
+const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey) 
+  : null;
 
 export default function RegisterPage() {
   const router = useRouter();
   
   // --- STATE ---
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // FOR THE NAV BAR
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [regStep, setRegStep] = useState(1); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -32,7 +36,7 @@ export default function RegisterPage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
-  // --- NAV ANIMATION VARIANTS (Fixed types for Deployment) ---
+  // --- NAV ANIMATION VARIANTS ---
   const menuContainerVars: Variants = {
     initial: { scaleY: 0 },
     animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] as any } },
@@ -75,6 +79,10 @@ export default function RegisterPage() {
 
   const handleFinalSubmit = async () => {
     if (!validateFinalStep()) return;
+    if (!supabase) {
+        setSubmitError("Database connection not configured.");
+        return;
+    }
     setIsSubmitting(true);
     setSubmitError(null);
     try {
@@ -93,10 +101,15 @@ export default function RegisterPage() {
     } catch (err: any) { setSubmitError(err.message || "An error occurred."); } finally { setIsSubmitting(false); }
   };
 
+  // --- PREVENT CRASH IF ENV VARS ARE MISSING DURING PRERENDER ---
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return <div className="flex items-center justify-center min-h-screen">Loading Configuration...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-[#E2B007]/30 flex flex-col">
         
-        {/* --- NAV BAR (REPLACED THE STATIC HEADER) --- */}
+        {/* --- NAV BAR --- */}
         <nav className="fixed top-0 w-full z-[100] flex justify-between items-center px-5 md:px-12 py-4 border-b border-zinc-100 bg-white/95 backdrop-blur-md">
             <button onClick={() => router.push('/')} className="relative z-[110]">
                 <img src="/logo.png" alt="LOGO" className="h-8 md:h-10 w-auto" />
