@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion"; // Added Variants
 import { createClient } from '@supabase/supabase-js';
 import { Upload, AlertCircle, CheckCircle, Loader2, ArrowLeft, CreditCard, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -32,17 +32,17 @@ export default function RegisterPage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
-  // --- NAV ANIMATION VARIANTS ---
-  const menuContainerVars = {
+  // --- NAV ANIMATION VARIANTS (Fixed types for Deployment) ---
+  const menuContainerVars: Variants = {
     initial: { scaleY: 0 },
-    animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] } },
-    exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] as any } },
+    exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] as any } },
   };
-  const menuLinkVars = {
-    initial: { y: "30vh", transition: { duration: 0.5, ease: [0.37, 0, 0.63, 1] } },
-    open: { y: 0, transition: { duration: 0.7, ease: [0, 0.55, 0.45, 1] } },
+  const menuLinkVars: Variants = {
+    initial: { y: "30vh", transition: { duration: 0.5, ease: [0.37, 0, 0.63, 1] as any } },
+    open: { y: 0, transition: { duration: 0.7, ease: [0, 0.55, 0.45, 1] as any } },
   };
-  const containerVars = {
+  const containerVars: Variants = {
     initial: { transition: { staggerChildren: 0.09, staggerDirection: -1 } },
     open: { transition: { delayChildren: 0.3, staggerChildren: 0.09, staggerDirection: 1 } },
   };
