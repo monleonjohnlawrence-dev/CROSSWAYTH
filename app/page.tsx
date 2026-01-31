@@ -1,11 +1,11 @@
 "use client";
-import { motion, AnimatePresence, useMotionValue, useAnimationFrame, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useAnimationFrame, useScroll, useTransform, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, Facebook, Instagram, ArrowUpRight } from "lucide-react";
-import { useRouter } from "next/navigation"; // <--- 1. IMPORT THIS
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter(); // <--- 2. INITIALIZE THIS
+  const router = useRouter();
   
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +39,6 @@ export default function Home() {
     if (!isDragging) {
       const moveBy = -0.5 * (delta / 10); 
       let newX = x.get() + moveBy;
-      // Use dynamic width or fallback if loading
       const threshold = refWidth > 0 ? -refWidth : -5000;
       if (newX <= threshold) {
         newX = 0;
@@ -102,25 +101,25 @@ export default function Home() {
     }, 200);
   };
 
-  // --- ANIMATION VARIANTS ---
-  const sentence = {
+  // --- ANIMATION VARIANTS (FIXED TYPES FOR VERCEL) ---
+  const sentence: Variants = {
     hidden: { opacity: 1 },
     visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
   };
-  const letter = {
+  const letter: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
-  const menuContainerVars = {
+  const menuContainerVars: Variants = {
     initial: { scaleY: 0 },
     animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] } },
     exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
   };
-  const menuLinkVars = {
+  const menuLinkVars: Variants = {
     initial: { y: "30vh", transition: { duration: 0.5, ease: [0.37, 0, 0.63, 1] } },
     open: { y: 0, transition: { duration: 0.7, ease: [0, 0.55, 0.45, 1] } },
   };
-  const containerVars = {
+  const containerVars: Variants = {
     initial: { transition: { staggerChildren: 0.09, staggerDirection: -1 } },
     open: { transition: { delayChildren: 0.3, staggerChildren: 0.09, staggerDirection: 1 } }
   };
@@ -152,14 +151,13 @@ export default function Home() {
           <a href="#about" onClick={(e) => handleScroll(e, 'about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</a>
           <a href="#" className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</a>
           
-          {/* --- FIXED: Added Click Handler --- */}
          <button 
-  type="button"
-  onClick={() => router.push('/register')} 
-  className="relative z-[999] cursor-pointer px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all"
->
-  Register
-</button>
+            type="button"
+            onClick={() => router.push('/register')} 
+            className="relative z-[999] cursor-pointer px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all"
+          >
+            Register
+          </button>
         </div>
         <button className="md:hidden p-2 relative z-[110] text-black" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -171,7 +169,6 @@ export default function Home() {
                 {['About', 'Crosscon', 'Register'].map((item) => (
                   <div key={item} className="overflow-hidden">
                     <motion.div variants={menuLinkVars}>
-                      {/* --- FIXED: Mobile Menu Logic --- */}
                       <a 
                         href={item === 'Register' ? '#' : `#${item.toLowerCase()}`} 
                         onClick={(e) => {
@@ -214,7 +211,6 @@ export default function Home() {
           <p className="text-zinc-600 font-bold uppercase tracking-tight break-words max-w-full leading-tight" style={{ fontSize: "clamp(0.85rem, 4.2vw, 1.8rem)" }}>JOIN US FOR THE 2026 CONFERENCE.</p>
         </div>
         <div className="z-10 mt-12 md:mt-24">
-          {/* --- FIXED: Added Click Handler --- */}
           <button 
             onClick={() => router.push('/register')}
             className="px-10 py-5 md:px-16 md:py-6 bg-black text-white text-[13px] md:text-lg font-bold uppercase w-full md:w-auto tracking-[0.2em] shadow-2xl hover:bg-[#E2B007] hover:text-black transition-all active:scale-95"
