@@ -148,13 +148,14 @@ export default function Home() {
           <img src="/logo.png" alt="CROSSWAY LOGO" className="h-8 md:h-10 w-auto object-contain hover:opacity-80 transition-opacity" />
         </button>
         <div className="hidden md:flex items-center gap-8">
-          <a href="#about" onClick={(e) => handleScroll(e, 'about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</a>
-          <a href="#" className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</a>
+          <button onClick={() => router.push('/#about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</button>
+          <button onClick={() => router.push('/')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</button>
+          <button onClick={() => router.push('/merch')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Merch</button>
           
-         <button 
+          <button 
             type="button"
             onClick={() => router.push('/register')} 
-            className="relative z-[999] cursor-pointer px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all"
+            className="px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all"
           >
             Register
           </button>
@@ -166,17 +167,21 @@ export default function Home() {
           {isMenuOpen && (
             <motion.div variants={menuContainerVars} initial="initial" animate="animate" exit="exit" className="fixed inset-0 bg-[#E2B007] z-[100] origin-top flex flex-col justify-center px-5 md:hidden">
               <motion.div variants={containerVars} initial="initial" animate="open" exit="initial" className="flex flex-col gap-6">
-                {['About', 'Crosscon', 'Register'].map((item) => (
+                {['About', 'Crosscon', 'Merch', 'Register'].map((item) => (
                   <div key={item} className="overflow-hidden">
                     <motion.div variants={menuLinkVars}>
                       <a 
-                        href={item === 'Register' ? '#' : `#${item.toLowerCase()}`} 
+                        href="#" 
                         onClick={(e) => {
                             e.preventDefault();
                             if (item === 'Register') {
                                 router.push('/register');
                             } else if (item === 'About') {
                                 handleScroll(e as any, 'about');
+                            } else if (item === 'Merch') {
+                                router.push('/merch');
+                            } else if (item === 'Crosscon') {
+                                router.push('/');
                             }
                             setIsMenuOpen(false);
                         }}
