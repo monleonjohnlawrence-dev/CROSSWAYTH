@@ -24,7 +24,6 @@ export default function MerchPage() {
     { src: "/shoot11.jpg", alt: "Showcase 11" },
     { src: "/shoot12.jpg", alt: "Showcase 12" },
     { src: "/shoot13.jpg", alt: "Showcase 13" },
-    
   ];
 
   const merchItems = [
@@ -35,7 +34,7 @@ export default function MerchPage() {
     { id: 5, src: "/hwhite.png", name: "CROSSCON HOODIE WHITE", price: "₱899", specs: "Heavyweight Fleece" },
   ];
 
-  // --- FOOTER SCROLL LOGIC (MATCHING HOME) ---
+  // --- FOOTER SCROLL LOGIC ---
   const { scrollYProgress } = useScroll();
   const footerHeight = useTransform(scrollYProgress, [0.9, 0.99], ["60px", "400px"]);
   const footerColor = useTransform(scrollYProgress, [0.9, 0.99], ["rgba(255,255,255,0.8)", "rgba(0,0,0,1)"]);
@@ -160,6 +159,23 @@ export default function MerchPage() {
               YOUR LIGHT <br/> <span className="italic outline-text">HAS COME</span>
             </h1>
         </div>
+
+        {/* --- VIDEO SECTION (ADDED) --- */}
+        <div className="w-full px-5 md:px-20 mb-12">
+            <div className="w-full aspect-video md:h-[600px] overflow-hidden bg-black border border-zinc-100 shadow-2xl">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                >
+                    <source src="/merchvideo.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+
+        {/* --- MOVING IMAGE GALLERY --- */}
         <div className="relative flex whitespace-nowrap">
           <motion.div ref={containerRef} style={{ x }} className="flex gap-4 md:gap-8 px-4">
             {duplicatedShowcase.map((item, i) => (
@@ -190,7 +206,7 @@ export default function MerchPage() {
         </div>
       </section>
 
-      {/* --- EXPANDING FOOTER (MATCHING HOME) --- */}
+      {/* --- EXPANDING FOOTER --- */}
       <motion.footer 
         style={{ height: footerHeight, backgroundColor: footerColor, color: footerTextColor }}
         className="fixed bottom-0 left-0 w-full z-[90] flex flex-col justify-between overflow-hidden border-t border-zinc-100/50 backdrop-blur-md"

@@ -2,14 +2,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { createClient } from '@supabase/supabase-js';
-import { Upload, AlertCircle, CheckCircle, Loader2, ArrowLeft, CreditCard, Menu, X } from "lucide-react";
+import { Upload, AlertCircle, CheckCircle, Loader2, CreditCard, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-// --- SUPABASE CLIENT SETUP (FIXED FOR BUILD) ---
+// --- SUPABASE CLIENT SETUP ---
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-
-// Only initialize if keys exist to prevent build-time crashes
 const supabase = (supabaseUrl && supabaseAnonKey) 
   ? createClient(supabaseUrl, supabaseAnonKey) 
   : null;
@@ -36,7 +34,7 @@ export default function RegisterPage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
-  // --- NAV ANIMATION VARIANTS (EXACT DUPLICATE) ---
+  // --- NAV ANIMATION VARIANTS ---
   const menuContainerVars: Variants = {
     initial: { scaleY: 0 },
     animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] as any } },
@@ -51,7 +49,6 @@ export default function RegisterPage() {
     open: { transition: { delayChildren: 0.3, staggerChildren: 0.09, staggerDirection: 1 } }
   };
 
-  // --- NAV LOGIC ---
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsMenuOpen(false);
@@ -109,13 +106,13 @@ export default function RegisterPage() {
   };
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return <div className="flex items-center justify-center min-h-screen">Loading Configuration...</div>;
+    return <div className="flex items-center justify-center min-h-screen font-bold uppercase tracking-widest">Loading Configuration...</div>;
   }
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-[#E2B007]/30 flex flex-col">
         
-        {/* --- DUPLICATED NAVBAR --- */}
+        {/* --- UPDATED NAVBAR --- */}
         <nav className="fixed top-0 w-full z-[100] flex justify-between items-center px-5 md:px-12 py-4 border-b border-transparent md:border-zinc-100 bg-white/0 md:bg-white/95 md:backdrop-blur-md">
           <button onClick={handleLogoClick} className="relative z-[110] block focus:outline-none">
             <img src="/logo.png" alt="CROSSWAY LOGO" className="h-8 md:h-10 w-auto object-contain hover:opacity-80 transition-opacity" />
@@ -123,6 +120,7 @@ export default function RegisterPage() {
           <div className="hidden md:flex items-center gap-8">
             <button onClick={() => router.push('/#about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</button>
             <button onClick={() => router.push('/')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</button>
+            <button onClick={() => router.push('/merch')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Merch</button>
             
             <button 
               type="button"
@@ -139,7 +137,7 @@ export default function RegisterPage() {
             {isMenuOpen && (
               <motion.div variants={menuContainerVars} initial="initial" animate="animate" exit="exit" className="fixed inset-0 bg-[#E2B007] z-[100] origin-top flex flex-col justify-center px-5 md:hidden">
                 <motion.div variants={containerVars} initial="initial" animate="open" exit="initial" className="flex flex-col gap-6">
-                  {['About', 'Crosscon', 'Register'].map((item) => (
+                  {['About', 'Crosscon', 'Merch', 'Register'].map((item) => (
                     <div key={item} className="overflow-hidden text-left">
                       <motion.div variants={menuLinkVars}>
                         <button 
@@ -147,6 +145,8 @@ export default function RegisterPage() {
                             if (item === 'Register') {
                               setRegStep(1);
                               setSubmitSuccess(false);
+                            } else if (item === 'Merch') {
+                              router.push('/merch');
                             } else {
                               router.push(item === 'About' ? '/#about' : '/');
                             }
