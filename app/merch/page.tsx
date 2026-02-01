@@ -12,13 +12,13 @@ export default function MerchPage() {
   // --- MERCH DATA ---
   const showcaseImages = [
     { src: "/shoot1.jpg", alt: "Showcase 1" },
-    { src: "/shoot2.jpg", alt: "Showcase 2" },
     { src: "/shoot5.jpg", alt: "Showcase 5" },
     { src: "/shoot6.jpg", alt: "Showcase 6" },
-    { src: "/shoot3.jpg", alt: "Showcase 3" },
-    { src: "/shoot4.jpg", alt: "Showcase 4" },
-    { src: "/shoot7.jpg", alt: "Showcase 7" },
+    { src: "/shoot2.jpg", alt: "Showcase 2" },
     { src: "/shoot8.jpg", alt: "Showcase 8" },
+    { src: "/shoot3.jpg", alt: "Showcase 3" },
+    { src: "/shoot7.jpg", alt: "Showcase 7" },
+    { src: "/shoot4.jpg", alt: "Showcase 4" }, 
     { src: "/shoot9.jpg", alt: "Showcase 9" },
     { src: "/shoot10.jpg", alt: "Showcase 10" },
     { src: "/shoot11.jpg", alt: "Showcase 11" },
@@ -154,12 +154,16 @@ export default function MerchPage() {
 
       {/* --- HERO SECTION --- */}
       <section className="relative pt-24 md:pt-32 pb-12 overflow-hidden flex flex-col justify-start">
-        <div className="px-5 md:px-20 mb-4 z-10">
-            <span className="text-[#E2B007] font-mono text-[10px] md:text-sm tracking-[0.3em] uppercase font-bold block mb-2">Showcase / CROSSCON MERCH</span>
-            <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
-              YOUR LIGHT <br/> <span className="italic outline-text">HAS COME</span>
-            </h1>
-        </div>
+  <div className="px-5 md:px-20 mb-4 z-10">
+    <span className="text-[#E2B007] font-mono text-[10px] md:text-sm tracking-[0.3em] uppercase font-bold block mb-2">
+      Showcase / CROSSCON MERCH
+    </span>
+    <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
+      NEXT UP <br /> 
+      YOUR LIGHT <br /> 
+      <span className="italic outline-text">HAS COME</span>
+    </h1>
+  </div>
         <div className="relative flex whitespace-nowrap">
           <motion.div ref={containerRef} style={{ x }} className="flex gap-4 md:gap-8 px-4">
             {duplicatedShowcase.map((item, i) => (
@@ -202,8 +206,8 @@ export default function MerchPage() {
         <motion.div style={{ opacity: footerContentOpacity }} className="flex-1 px-5 md:px-12 pb-12 flex flex-col justify-center gap-8">
            <div className="flex flex-col md:flex-row justify-between items-end gap-8">
               <div className="flex flex-col gap-2">
-                 <h3 className="text-[#E2B007] text-xs font-bold uppercase tracking-[0.2em] mb-2">Available at Crosscon</h3>
-                 <p className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">The Movement Wear</p>
+                 <h3 className="text-[#E2B007] text-xs font-bold uppercase tracking-[0.2em] mb-2">Available at Crossconference</h3>
+                 <p className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">YOU CAN ORDER BY CONTACTING US ON OUR SOCIAL MEDIA PLATFORMS.</p>
                  <a href="mailto:crossway2024@gmail.com" className="text-xl md:text-2xl font-light opacity-80 hover:text-[#E2B007] transition-colors mt-2 flex items-center gap-2 group">
                     crossway2024@gmail.com 
                     <ArrowUpRight className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />

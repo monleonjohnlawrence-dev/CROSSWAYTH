@@ -212,7 +212,13 @@ export default function Home() {
           </div>
         </motion.h1>
         <div className="z-10 mt-8 md:mt-10 flex flex-col items-start gap-1 max-w-full">
-          <p className="font-black tracking-tight uppercase text-[#E2B007] break-words max-w-full leading-none" style={{ fontSize: "clamp(1.3rem, 6.5vw, 2.5rem)" }}>YOUR LIGHT HAS COME.</p>
+          
+          <p 
+  className="font-black tracking-tight uppercase text-[#E2B007] break-words max-w-full leading-none" 
+  style={{ fontSize: "clamp(1.3rem, 6.5vw, 2.5rem)" }}
+>
+  <span className="text-black">NEXT UP</span> | YOUR LIGHT HAS COME.
+</p>
           <p className="text-zinc-600 font-bold uppercase tracking-tight break-words max-w-full leading-tight" style={{ fontSize: "clamp(0.85rem, 4.2vw, 1.8rem)" }}>JOIN US FOR THE 2026 CONFERENCE.</p>
         </div>
         <div className="z-10 mt-12 md:mt-24">
