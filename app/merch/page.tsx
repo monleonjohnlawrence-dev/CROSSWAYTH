@@ -29,8 +29,8 @@ export default function MerchPage() {
 
   const merchItems = [
     { id: 1, src: "/sblack.png", name: "CROSSCON SHIRT BLACK ", price: "₱399", specs: "100% Cotton / Oversized Fit" },
-    { id: 2, src: "/swhite.png", name: "CROSSCON SHIRT WHITE", price: "₱899", specs: "100% Cotton / Oversized Fit" },
-    { id: 3, src: "/scream.png", name: "CROSSCON SHIRT CREAM", price: "₱899", specs: "100% Cotton / Oversized Fit" },
+    { id: 2, src: "/swhite.png", name: "CROSSCON SHIRT WHITE", price: "₱399", specs: "100% Cotton / Oversized Fit" },
+    { id: 3, src: "/scream.png", name: "CROSSCON SHIRT CREAM", price: "₱399", specs: "100% Cotton / Oversized Fit" },
     { id: 4, src: "/hblack.png", name: "CROSSCON HOODIE BLACK", price: "₱899", specs: "Heavyweight Fleece" },
     { id: 5, src: "/hwhite.png", name: "CROSSCON HOODIE WHITE", price: "₱899", specs: "Heavyweight Fleece" },
   ];
@@ -155,9 +155,9 @@ export default function MerchPage() {
       {/* --- HERO SECTION --- */}
       <section className="relative pt-24 md:pt-32 pb-12 overflow-hidden flex flex-col justify-start">
         <div className="px-5 md:px-20 mb-4 z-10">
-            <span className="text-[#E2B007] font-mono text-[10px] md:text-sm tracking-[0.3em] uppercase font-bold block mb-2">Showcase / 2026 Collection</span>
+            <span className="text-[#E2B007] font-mono text-[10px] md:text-sm tracking-[0.3em] uppercase font-bold block mb-2">Showcase / CROSSCON MERCH</span>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
-              The Movement <br/> <span className="italic outline-text">Wear</span>
+              YOUR LIGHT <br/> <span className="italic outline-text">HAS COME</span>
             </h1>
         </div>
         <div className="relative flex whitespace-nowrap">
@@ -196,7 +196,7 @@ export default function MerchPage() {
         className="fixed bottom-0 left-0 w-full z-[90] flex flex-col justify-between overflow-hidden border-t border-zinc-100/50 backdrop-blur-md"
       >
         <div className="flex justify-end items-start px-5 md:px-12 pt-4 w-full h-[60px] shrink-0">
-          <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 pt-1">© 2026 CROSSWAY</div>
+          <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 pt-1">© 2023 CROSSWAY</div>
         </div>
 
         <motion.div style={{ opacity: footerContentOpacity }} className="flex-1 px-5 md:px-12 pb-12 flex flex-col justify-center gap-8">
