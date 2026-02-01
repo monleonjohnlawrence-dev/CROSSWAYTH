@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { createClient } from '@supabase/supabase-js';
 import { Upload, AlertCircle, CheckCircle, Loader2, ArrowLeft, CreditCard, Menu, X } from "lucide-react";
@@ -36,11 +36,11 @@ export default function RegisterPage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
-  // --- NAV ANIMATION VARIANTS ---
+  // --- NAV ANIMATION VARIANTS (EXACT DUPLICATE) ---
   const menuContainerVars: Variants = {
     initial: { scaleY: 0 },
     animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] as any } },
-    exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] as any } },
+    exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] as any } }
   };
   const menuLinkVars: Variants = {
     initial: { y: "30vh", transition: { duration: 0.5, ease: [0.37, 0, 0.63, 1] as any } },
@@ -48,10 +48,17 @@ export default function RegisterPage() {
   };
   const containerVars: Variants = {
     initial: { transition: { staggerChildren: 0.09, staggerDirection: -1 } },
-    open: { transition: { delayChildren: 0.3, staggerChildren: 0.09, staggerDirection: 1 } },
+    open: { transition: { delayChildren: 0.3, staggerChildren: 0.09, staggerDirection: 1 } }
   };
 
-  // --- LOGIC ---
+  // --- NAV LOGIC ---
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    router.push('/');
+  };
+
+  // --- FORM LOGIC ---
   const validateStep1 = () => {
     const newErrors: any = {};
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
@@ -101,7 +108,6 @@ export default function RegisterPage() {
     } catch (err: any) { setSubmitError(err.message || "An error occurred."); } finally { setIsSubmitting(false); }
   };
 
-  // --- PREVENT CRASH IF ENV VARS ARE MISSING DURING PRERENDER ---
   if (!supabaseUrl || !supabaseAnonKey) {
     return <div className="flex items-center justify-center min-h-screen">Loading Configuration...</div>;
   }
@@ -109,46 +115,54 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-[#E2B007]/30 flex flex-col">
         
-        {/* --- NAV BAR --- */}
-        <nav className="fixed top-0 w-full z-[100] flex justify-between items-center px-5 md:px-12 py-4 border-b border-zinc-100 bg-white/95 backdrop-blur-md">
-            <button onClick={() => router.push('/')} className="relative z-[110]">
-                <img src="/logo.png" alt="LOGO" className="h-8 md:h-10 w-auto" />
+        {/* --- DUPLICATED NAVBAR --- */}
+        <nav className="fixed top-0 w-full z-[100] flex justify-between items-center px-5 md:px-12 py-4 border-b border-transparent md:border-zinc-100 bg-white/0 md:bg-white/95 md:backdrop-blur-md">
+          <button onClick={handleLogoClick} className="relative z-[110] block focus:outline-none">
+            <img src="/logo.png" alt="CROSSWAY LOGO" className="h-8 md:h-10 w-auto object-contain hover:opacity-80 transition-opacity" />
+          </button>
+          <div className="hidden md:flex items-center gap-8">
+            <button onClick={() => router.push('/#about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</button>
+            <button onClick={() => router.push('/')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</button>
+            
+            <button 
+              type="button"
+              onClick={() => {setRegStep(1); setSubmitSuccess(false);}} 
+              className="relative z-[999] cursor-pointer px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all"
+            >
+              Register
             </button>
-
-            <div className="hidden md:flex items-center gap-8">
-                <button onClick={() => router.push('/#about')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">About</button>
-                <button onClick={() => router.push('/')} className="text-xs font-bold uppercase tracking-widest hover:text-[#E2B007] transition-colors">Crosscon</button>
-                <button onClick={() => {setRegStep(1); setSubmitSuccess(false);}} className="px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#E2B007] hover:text-black transition-all">Register</button>
-            </div>
-
-            <button className="md:hidden p-2 relative z-[110] text-black" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <motion.div variants={menuContainerVars} initial="initial" animate="animate" exit="exit" className="fixed inset-0 bg-[#E2B007] z-[100] origin-top flex flex-col justify-center px-5 md:hidden">
-                        <motion.div variants={containerVars} initial="initial" animate="open" exit="initial" className="flex flex-col gap-6">
-                            {['About', 'Crosscon', 'Register'].map((item) => (
-                                <div key={item} className="overflow-hidden">
-                                    <motion.div variants={menuLinkVars}>
-                                        <button 
-                                            onClick={() => {
-                                                setIsMenuOpen(false);
-                                                if(item === 'Register') { setRegStep(1); setSubmitSuccess(false); }
-                                                else router.push(item === 'About' ? '/#about' : '/');
-                                            }} 
-                                            className="block text-5xl font-black uppercase text-black hover:text-white transition-colors"
-                                        >
-                                            {item}
-                                        </button>
-                                    </motion.div>
-                                </div>
-                            ))}
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+          </div>
+          <button className="md:hidden p-2 relative z-[110] text-black" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div variants={menuContainerVars} initial="initial" animate="animate" exit="exit" className="fixed inset-0 bg-[#E2B007] z-[100] origin-top flex flex-col justify-center px-5 md:hidden">
+                <motion.div variants={containerVars} initial="initial" animate="open" exit="initial" className="flex flex-col gap-6">
+                  {['About', 'Crosscon', 'Register'].map((item) => (
+                    <div key={item} className="overflow-hidden text-left">
+                      <motion.div variants={menuLinkVars}>
+                        <button 
+                          onClick={() => {
+                            if (item === 'Register') {
+                              setRegStep(1);
+                              setSubmitSuccess(false);
+                            } else {
+                              router.push(item === 'About' ? '/#about' : '/');
+                            }
+                            setIsMenuOpen(false);
+                          }}
+                          className={`block text-5xl font-black uppercase tracking-tighter transition-colors text-left ${item === 'Register' ? 'text-white hover:text-black' : 'text-black hover:text-white'}`}
+                        >
+                          {item}
+                        </button>
+                      </motion.div>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
 
         {/* Main Content */}
@@ -221,7 +235,7 @@ export default function RegisterPage() {
 
                     {regStep === 3 && (
                         <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-6">
-                           
+                            
                             <div className="bg-zinc-100 p-6 rounded-lg border border-zinc-200">
                                 <div className="flex items-center gap-2 mb-2">
                                     <CreditCard size={18} className="text-[#007DFE]" />
