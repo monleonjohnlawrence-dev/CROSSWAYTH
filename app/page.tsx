@@ -296,8 +296,8 @@ export default function Home() {
                     <ArrowUpRight className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                  </a>
                  <div className="flex gap-6 items-center mt-6">
-                    <a href="#" className="hover:text-[#E2B007] transition-colors"><Instagram size={28} /></a>
-                    <a href="#" className="hover:text-[#E2B007] transition-colors"><Facebook size={28} /></a>
+                    <a href="https://www.instagram.com/crossway_yth/" className="hover:text-[#E2B007] transition-colors"><Instagram size={28} /></a>
+                    <a href="https://www.facebook.com/crossway2023" className="hover:text-[#E2B007] transition-colors"><Facebook size={28} /></a>
                  </div>
               </div>
               
